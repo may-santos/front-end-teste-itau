@@ -1,5 +1,5 @@
 export interface Transaction {
-  id: string;
+  id?: string;
   createdAt: Date;
   amount: number;
   type: 'WITHDRAW' | 'DEPOSIT';
