@@ -58,10 +58,10 @@ export class TransactionsService {
     return this.http.post<Transaction>(api, transactionData).pipe(
       tap((response) => console.log('Transação criada com sucesso:', response)),
       catchError((error) => {
-        console.error('Erro ao criar transação:', error);
-        return throwError(
-          () => new Error('Não foi possível salvar a transação. Por favor, tente novamente.')
-        );
+        const backendMessage =
+          error?.error?.message ||
+          'Não foi possível criar a transação. Por favor, tente novamente.';
+        return throwError(() => new Error(backendMessage));
       })
     );
   }
