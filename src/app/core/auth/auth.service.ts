@@ -64,7 +64,7 @@ export class AuthService {
               email: user.email,
             };
 
-            return this.http.get(`${this.apiUrl}?email=${user.email}`, { headers }).pipe(
+            return this.http.get(`${this.apiUrl}/email/${user.email}`, { headers }).pipe(
               switchMap((existingUser) => {
                 return of(existingUser);
               }),
