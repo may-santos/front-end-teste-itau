@@ -40,7 +40,6 @@ export class AuthService {
   }
 
   getAccessToken(): Observable<string> {
-    console.log(this.auth0.idTokenClaims$);
     return from(this.auth0.getAccessTokenSilently());
   }
 
@@ -48,7 +47,7 @@ export class AuthService {
     return this.user$.pipe(
       switchMap((user) => {
         if (!user || !user.email) {
-          console.log('Usuário ou e-mail não disponível');
+          alert('Usuário ou e-mail não disponível');
           return of(null);
         }
 
@@ -67,21 +66,17 @@ export class AuthService {
 
             return this.http.get(`${this.apiUrl}?email=${user.email}`, { headers }).pipe(
               switchMap((existingUser) => {
-                console.log('Usuário já existe:', existingUser);
                 return of(existingUser);
               }),
               catchError((error: HttpErrorResponse) => {
                 if (error.status === 404) {
-                  console.log('Usuário não encontrado, criando novo usuário...');
                   return this.http.post(this.apiUrl, newUser, { headers }).pipe(
                     tap((response) => console.log('Usuário criado com sucesso:', response)),
                     catchError((postError) => {
-                      console.error('Erro ao criar usuário:', postError);
                       return of(null);
                     })
                   );
                 }
-                console.error('Erro ao verificar a existência do usuário:', error);
                 return throwError(() => error);
               })
             );
