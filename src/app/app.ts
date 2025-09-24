@@ -1,11 +1,14 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { AuthButtonComponent } from './core/auth/auth-button.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [AuthButtonComponent, RouterModule],
   templateUrl: './app.html',
-  standalone: false,
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('front-teste-itau');
+
 }
