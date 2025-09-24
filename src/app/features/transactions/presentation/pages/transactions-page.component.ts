@@ -60,9 +60,9 @@ export class TransactionsPageComponent implements OnInit {
         this.isSaving = false;
         this.closeModal();
       },
-      error: () => {
+      error: (error) => {
         this.isSaving = false;
-        alert('Erro ao salvar a transação. Por favor, tente novamente.');
+        alert(error?.message || 'Erro ao salvar a transação. Por favor, tente novamente.');
       },
     });
   }
