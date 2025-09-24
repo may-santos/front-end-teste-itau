@@ -12,30 +12,28 @@ import { Transaction } from '../../../domain/transactions.model';
 })
 export class TransactionModalComponent {
   _isVisible = false;
-  
-  @Input() 
+
+  @Input()
   set isVisible(value: boolean) {
     this._isVisible = value;
-    console.log('Modal isVisible mudou para:', value, new Date().toISOString());
   }
-  
+
   get isVisible(): boolean {
     return this._isVisible;
   }
-  
+
   @Input() isSaving = false;
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Transaction>();
 
   newTransaction: Transaction = {
-    id: '',
     createdAt: new Date(),
     amount: 0,
     type: 'WITHDRAW',
   };
 
   onSave() {
-    this.newTransaction.id = Math.random().toString(36).substring(7);
+    if (this.isSaving) return
     this.save.emit(this.newTransaction);
     this.onClose();
   }
